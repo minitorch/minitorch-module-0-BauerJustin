@@ -5,50 +5,86 @@ import math
 # ## Task 0.1
 from typing import Callable, Iterable
 
-#
-# Implementation of a prelude of elementary functions.
 
-# Mathematical functions:
-# - mul
-# - id
-# - add
-# - neg
-# - lt
-# - eq
-# - max
-# - is_close
-# - sigmoid
-# - relu
-# - log
-# - exp
-# - log_back
-# - inv
-# - inv_back
-# - relu_back
-#
-# For sigmoid calculate as:
-# $f(x) =  \frac{1.0}{(1.0 + e^{-x})}$ if x >=0 else $\frac{e^x}{(1.0 + e^{x})}$
-# For is_close:
-# $f(x) = |x - y| < 1e-2$
+def mul(x, y):
+    return x * y
 
+def id(x):
+    return x
 
-# TODO: Implement for Task 0.1.
+def add(x, y):
+    return x + y
 
+def neg(x):
+    return -x
 
-# ## Task 0.3
+def lt(x, y):
+    return x < y
 
-# Small practice library of elementary higher-order functions.
+def eq(x, y):
+    return x == y
 
-# Implement the following core functions
-# - map
-# - zipWith
-# - reduce
-#
-# Use these to implement
-# - negList : negate a list
-# - addLists : add two lists together
-# - sum: sum lists
-# - prod: take the product of lists
+def max(x, y):
+    return x if x > y else y
+
+def is_close(x, y):
+    return abs(x - y) < 1e-2
+
+def sigmoid(x):
+    return 1.0 / (1.0 + math.exp(-x)) if x >= 0 else math.exp(x) / (1.0 + math.exp(x))
+
+def relu(x):
+    return max(x, 0)
+
+def log(x):
+    return math.log(x)
+
+def exp(x):
+    return math.exp(x)
+
+def log_back(x, y):
+    return y / x
+
+def inv(x):
+    return 1 / x
+
+def inv_back(x, y):
+    return - y / x ** 2
+
+def relu_back(x, y):
+    return y * (1 if x > 0 else 0)
+
+def map(x, function):
+    out = []
+    for i in range(len(x)):
+        out.append(function(x[i]))
+    return out
+        
+def zipWith(x, y, function):
+    out = []
+    for i in range(len(x)):
+        out.append(function(x[i], y[i]))
+    return out
+
+def reduce(x, function):
+    if len(x) == 0:
+        return 0.0
+    out = x[0]
+    for i in range(1, len(x)):
+        out = function(x[i], out)
+    return out
+
+def negList(x):
+    return map(x, neg)
+
+def addLists(x, y):
+    return zipWith(x, y, add)
+
+def sum(x):
+    return reduce(x, add)
+
+def prod(x):
+    return reduce(x, mul)
 
 
 # TODO: Implement for Task 0.3.
